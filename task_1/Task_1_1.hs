@@ -7,31 +7,29 @@ data BinaryOperatorType = Addition -- binary operation
 data UnaryOperatorType = UnarySubtraction deriving(Show,Eq)-- unary operation
 
 data Term = IntConstant{ intValue :: Int }    
-            | Variable{ varName :: String }    
-			| BinaryOperator{ opBinaryType :: BinaryOperatorType }    
-			| UnaryOperator{ opUnaryType :: UnaryOperatorType }
-            | BinaryTerm{ opBinary :: Term, lhv :: Term, rhv :: Term } 
-			| UnaryTerm{ opUnary :: Term, hv :: Term } deriving(Show,Eq)
+            | Variable{ varName :: String }
+            | BinaryTerm{ opBinary :: BinaryOperatorType, lhv :: Term, rhv :: Term } 
+			| UnaryTerm{ opUnary :: UnaryOperatorType, hv :: Term } deriving(Show,Eq)
 			
 -- Binary Addition
 infixl 3 <+>
 (<+>) (IntConstant a) (IntConstant b) = IntConstant (a + b)
-(<+>) a b = BinaryTerm (BinaryOperator Addition) a b
+(<+>) a b = BinaryTerm Addition a b
 
 -- Binary Subtraction
 infixl 3 <->
 (<->) (IntConstant a) (IntConstant b) = IntConstant (a - b)
-(<->) a b = BinaryTerm (BinaryOperator Subtraction) a b
+(<->) a b = BinaryTerm Subtraction a b
 
 -- Binary Multiplication
 infixl 4 <*>
 (<*>) (IntConstant a) (IntConstant b) = IntConstant (a * b)
-(<*>) a b = BinaryTerm (BinaryOperator Multiplication) a b
+(<*>) a b = BinaryTerm Multiplication a b
 
 -- Binary Subtraction
 infixl 5 <-->
 (<-->) (IntConstant a) = IntConstant (-a)
-(<-->) a = UnaryTerm (UnaryOperator UnarySubtraction) a
+(<-->) a = UnaryTerms UnarySubtraction a
 
 replaceVar :: Term -> String -> Term -> Term
 replaceVar (IntConstant const) _ _ = IntConstant const
