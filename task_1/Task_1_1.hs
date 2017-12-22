@@ -9,7 +9,7 @@ data UnaryOperatorType = UnarySubtraction deriving(Show,Eq)-- unary operation
 data Term = IntConstant{ intValue :: Int }    
             | Variable{ varName :: String }
             | BinaryTerm{ opBinary :: BinaryOperatorType, lhv :: Term, rhv :: Term } 
-			| UnaryTerm{ opUnary :: UnaryOperatorType, hv :: Term } deriving(Show,Eq)
+            | UnaryTerm{ opUnary :: UnaryOperatorType, hv :: Term } deriving(Show,Eq)
 			
 -- Binary Addition
 infixl 3 <+>
