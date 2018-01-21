@@ -8,13 +8,13 @@ data WeirdPeanoNumber = Zero | Succ (WeirdPeanoNumber ) | Pred (WeirdPeanoNumber
 module Task31 where 
 data WeirdPeanoNumber = Zero | Succ (WeirdPeanoNumber) | Pred (WeirdPeanoNumber)
 
--- Перевод из нашего числа в целое
+-- Перевод из WeirdPeanoNumber в целое
 weirdPeanoToInt :: WeirdPeanoNumber -> Integer
 weirdPeanoToInt Zero     = 0
 weirdPeanoToInt (Succ a) = (weirdPeanoToInt a) + 1
 weirdPeanoToInt (Pred a) = (weirdPeanoToInt a) - 1
 
--- Перевод из целого числа в наше
+-- Перевод из целого в WeirdPeanoNumber
 intToWeirdPeano :: Integer -> WeirdPeanoNumber
 intToWeirdPeano a | a > 0     = Succ (intToWeirdPeano (a - 1))
                   | a < 0     = Pred (intToWeirdPeano (a + 1))
@@ -65,7 +65,7 @@ instance Num WeirdPeanoNumber where
 
     signum Zero     = Zero
     signum (Succ _) = Succ Zero
-    signum (Pred _)	= Pred Zero
+    signum (Pred _) = Pred Zero
 	
     fromInteger a | (a == 0) = Zero
                   | (a > 0)  = Succ $ fromInteger (a - 1)
@@ -103,5 +103,5 @@ instance Integral WeirdPeanoNumber where
     quotRem a b | signum a == signum b = absValue -- случай: (Succ Succ) или (Pred Pred)
                 | otherwise = (negate $ fst absValue, (signum a) * (snd absValue)) -- случай: (Succ Pred) или (Pred Succ) -- отрицаем результат целого числа и выбираем знак для остатка
                     where remSubdiv x@(integ, rem) div | rem >= div  = remSubdiv (integ + 1, rem - div) div
-                                                   | otherwise = x 
+                                                       | otherwise = x 
                           absValue = remSubdiv (Zero, abs a) (abs b)
