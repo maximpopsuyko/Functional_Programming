@@ -39,16 +39,16 @@ reverse' a = foldl' (\list n -> n : list) [] a
 --elementAt 
 elementAt' :: Integer -> [a] -> a
 elementAt' index (head:list) = snd
-                                (
-								    foldl'
-									    (
-										    \(i, x) y -> if i < 0
-                                                         then (i-1, x)
-                                                         else (i-1, y)
-										)
-                                        (index-1, head)
-                                        list
-								)
+                                 (
+                                     foldl'
+                                          (
+                                               \(i, x) y -> if i < 0
+                                                            then (i-1, x)
+                                                            else (i-1, y)
+                                          )
+                                          (index-1, head)
+                                          list
+                                 )
 								
 --indexOf
 indexOf' :: String -> [String] -> Integer
@@ -56,8 +56,8 @@ indexOf' str list = if snd y then fst y else error "not found" where
                                 y = foldl'
                                     (\x n -> if snd x == False
                                         then if str == n
-                                            then (fst x, True)
-                                            else (fst x + 1, False)
+                                             then (fst x, True)
+                                             else (fst x + 1, False)
                                         else x
                                     )
                                     (0, False)
